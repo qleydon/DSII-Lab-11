@@ -1,0 +1,33 @@
+module qcl_SSRM_v_tb;
+reg [13:0] M_val_tb, m_val_tb;
+reg START_tb, Clock_tb;
+wire [27:0] FP_tb;
+wire DONE_tb;
+integer i; 
+
+qcl_SSRM_v MUV(M_val_tb, m_val_tb, START_tb, Clock_tb, FP_tb, DONE_tb);
+
+initial begin
+	M_val_tb = 14'b00000000000000; m_val_tb = 14'b00000000000000; START_tb = 1'b1;
+	for(i=0; i<30; i=i+1)
+		begin Clock_tb = 1'b0; #20000; Clock_tb = 1'b1; #20000; end
+	
+	M_val_tb = 14'b11111111111111; m_val_tb = 14'b11111111111111; START_tb = 1'b1;
+	for(i=0; i<30; i=i+1)
+	begin Clock_tb = 1'b0; #20000; Clock_tb = 1'b1; #20000; end
+	
+	M_val_tb = 14'b01010101010101; m_val_tb = 14'b01010101010101; START_tb = 1'b1;
+	for(i=0; i<30; i=i+1)
+		begin Clock_tb = 1'b0; #20000; Clock_tb = 1'b1; #20000; end
+	
+	M_val_tb = 14'b10101010101010; m_val_tb = 14'b10101010101010; START_tb = 1'b1;
+	for(i=0; i<30; i=i+1)
+		begin Clock_tb = 1'b0; #20000; Clock_tb = 1'b1; #20000; end
+//-----------------------------------------------------------------------------------------------------	
+	M_val_tb = 14'b01010101010101; m_val_tb = 14'b10101010101010; START_tb = 1'b1;
+	for(i=0; i<30; i=i+1)
+		begin Clock_tb = 1'b0; #20000; Clock_tb = 1'b1; #20000; end
+	
+	
+end
+endmodule 

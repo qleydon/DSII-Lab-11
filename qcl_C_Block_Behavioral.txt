@@ -1,0 +1,19 @@
+module qcl_C_Block_Behavioral (D_in, D_out, neg);
+	parameter n = 14;
+	input [n-1:0] D_in;
+	output reg [n-1:0] D_out;
+	output reg neg;
+	
+	always @(D_in)
+	begin
+		if (D_in[n-1] == 1) begin
+			neg = 1'b1;
+			D_out = ~ D_in + 1'b1;
+			end
+		else
+		begin
+			D_out = D_in;
+			neg = 1'b0;
+		end
+	end
+endmodule 

@@ -1,0 +1,9 @@
+module qcl_nbit2to1mux_v (sel, A, B, out);
+	parameter n = 14;
+	input [n-1:0] A, B;
+	input sel;
+	output reg [n-1:0] out;
+
+	always @(sel, A, B)
+		out = sel? B : A;
+endmodule 

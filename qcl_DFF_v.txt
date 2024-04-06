@@ -1,0 +1,13 @@
+module qcl_DFF_v (D, RST, LD, Q);
+	input D, RST, LD;
+	output reg Q;
+
+	always @ (D, RST, LD)
+	begin 
+		if (RST == 0 && LD == 1)
+			Q <= D;
+		else
+			Q <= 0;
+	end 
+endmodule 
+		

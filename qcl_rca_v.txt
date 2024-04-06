@@ -1,0 +1,22 @@
+module qcl_rca_v (AS_Sel, cin, x, y, s, cout);
+	parameter n = 14;
+	input cin, AS_Sel;
+	input [n-1:0] x, y;
+	output reg [n-1:0] s;
+	output reg cout;
+	reg [n:0] C;
+	integer k;
+	
+	always @(AS_Sel, x, y, cin)
+	begin 
+		C[0] = cin ^ AS_Sel;
+		for (k = 0; k < n; k = k+1)
+		begin 
+			s[k] = x[k] ^(y[k] ^ AS_Sel) ^ C[k];
+			C[k+1] = (x[k] & (y[k] ^ AS_Sel)) | (x[k] & C[k]) | ((y[k] ^ AS_Sel) & C[k] );
+			end
+		cout = C[n];
+	end
+
+endmodule
+	

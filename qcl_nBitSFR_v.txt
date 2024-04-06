@@ -1,0 +1,17 @@
+module qcl_nBitSFR_v (Din, SDinL, SDinR, Clock, Reset, Load, ShR, ShL, SDoutR, SDoutL, Dout);
+	parameter n = 14;
+	input [n-1:0] Din; // This is the parallel input data bus
+	input SDinL, SDinR; // These are the 1-bit serial data inputs used during ShR and ShL respectively
+	input Clock, Reset, Load, ShR, ShL; // These are the control signals
+	output reg SDoutR, SDoutL; // These are the 1-bit serial data outputs used during ShR and ShL respectively
+	output reg [n-1:0] Dout; // This is the parallel output data bus
+
+	always @(posedge Clock)
+		if 	(Reset == 1) 	begin Dout = 0; 		SDoutL = 1'b0; 		SDoutR = 1'b0; 	end
+		else if (Load == 1) 	begin Dout = Din; 	SDoutL = Dout[n-1];	SDoutR = Dout[0]; end
+		else if (ShR == 1) 	begin Dout[n-2:0] = Dout[n-1:1]; Dout[n-1] = SDinL;
+																SDoutL = Dout[n-1];	SDoutR = Dout[0]; end
+		else if (ShL == 1) 	begin Dout[n-1:1] = Dout[n-2:0]; Dout[0] = SDinR;
+																SDoutL = Dout[n-1];	SDoutR = Dout[0]; end
+		else 						begin Dout = Dout; 	SDoutL = Dout[n-1];	SDoutR = Dout[0]; end			
+endmodule

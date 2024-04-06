@@ -1,0 +1,17 @@
+module qcl_C_Block_Functional (D_in, M_neg, m_neg, D_out, neg);
+	parameter n = 28;
+	input [n-1:0] D_in;
+	input M_neg, m_neg;
+	output [n-1:0] D_out;
+	output neg;
+	wire [n-1:0] D_1s, D_2s;
+	wire c;
+
+	//always @(D_in)
+	//begin
+		assign neg = (M_neg ^ m_neg);
+		assign D_1s = ~D_in;
+		qcl_rca_v #(28) add_C (1'b0, 1'b0, D_1s, 28'b0000000000000000000000000001, D_2s, c);    //may need to subtract one to do 2s comp
+		qcl_nbit2to1mux_v #(28) mux_C (neg, D_in, D_2s, D_out);
+	//end
+endmodule 
